@@ -236,10 +236,10 @@ if seleciona_cargo == 'Análise de Tendências':
     select_cargo = st.sidebar.selectbox("Selecione o cargo", ("Presidente" ,"Prefeito ","Governador ","Vice-prefeito","Vice-governador ","Vice-presidente ",))
     select_raca = st.sidebar.selectbox("Selecione Cor/Raça", ("Amarela", "Branca", "Indígena", "Parda", "Preta"))
     select_estado_civil = st.sidebar.selectbox("Selecione o Estado Civil", ("Casado(a)" ,"Divorciado(a) ","Não divulgável","Separado(a) judicialmente ","Solteiro(a) ","Viúvo(a)"))
-    select_faixa_etaria = st.sidebar.selectbox("Selecione a faixa etária", ("20 anos","21 a 24 anos ","25 a 29 anos ","30 a 34 anos ","35 a 39 anos ","40 a 44 anos ","45 a 49 anos ","50 a 54 anos ","55 a 59 anos ","60 a 64 anos ","65 a 69 anos ","70 a 74 anos ","75 a 79 anos ","80 a 84 anos ","85 a 89 anos ","90 a 94 anos ","95 a 99 anos ","Não divulgável ","100 anos ou mais "))
+    select_faixa_etaria = st.sidebar.selectbox("Selecione a faixa etária", ("20 anos","21 a 24 anos","25 a 29 anos","30 a 34 anos","35 a 39 anos","40 a 44 anos","45 a 49 anos","50 a 54 anos","55 a 59 anos","60 a 64 anos ","65 a 69 anos","70 a 74 anos","75 a 79 anos ","80 a 84 anos","85 a 89 anos","90 a 94 anos","95 a 99 anos","Não divulgável","100 anos ou mais"))
     select_genero = st.sidebar.selectbox("Selecione o gênero", ("Masculino", "Feminino"))
     select_instrucao = st.sidebar.selectbox("Selecione o grau de instrução", ("Analfabeto", "Lê e escreve", "Ensino Fundamental incompleto", "Ensino Fundamental completo","Ensino Médio incompleto", "Ensino Médio completo", "Superior incompleto", "Superior completo"))
-    select_uf = st.sidebar.selectbox("Selecione a UF", ("AC" ,"AL ","AM ","AP ","BA ","CE ","DF ","ES ","GO ","MA ","MG ","MS ","MT ","PA ","PB ","PE ","PI ","PR ","RJ ","RN ","RO ","RR ","RS ","SC ","SE ","SP ","TO ",))
+    select_uf = st.sidebar.selectbox("Selecione a UF", ("AC" ,"AL","AM","AP","BA","CE","DF","ES","GO","MA","MG","MS","MT ","PA","PB","PE","PI ","PR","RJ","RN","RO","RR","RS ","SC","SE","SP","TO",))
     # Filtra os dados de acordo com as escolhas do usuário
 
     if st.sidebar.button("Calcular"):
