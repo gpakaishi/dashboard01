@@ -41,10 +41,11 @@ if seleciona_cargo == 'Governador':
 
     opcao = st.sidebar.radio("Selecione uma opção", ('Idade', 'Gênero','Cor/Raça', 'Grau de Instrução'))
 
-
     if opcao == 'Idade':
-        x_label = df_gov_eleito['ano'].unique()
-        y_label = df_gov_eleito['faixa_etaria'].unique()
+        x_label = sorted(list(df_gov_eleito['ano'].unique()))
+        y_label = sorted(list(df_gov_eleito['faixa_etaria'].unique()))
+        #cem = y_label.pop(0)
+        #y_label.insert(len(y_label) - 1, cem)
 
         heatmap_sexo_eleitos = list()
 
@@ -56,10 +57,22 @@ if seleciona_cargo == 'Governador':
             heatmap_sexo_eleitos.append(values)
         data_set = np.transpose(heatmap_sexo_eleitos)
 
-        sns.heatmap(heatmap_sexo_eleitos, cmap='coolwarm', annot=True, yticklabels=y_label, xticklabels=x_label, fmt=',d', linewidths=.3)
+
+        sns.heatmap(heatmap_sexo_eleitos, cmap='Spectral', annot=True, yticklabels=y_label, xticklabels=x_label )
+        #fmt = ',d'
+      #  custom_palette = sns.color_palette("RdGy", 11)
+        sns.set(rc={ 'figure.facecolor': (0,0,0,0), 'axes.labelcolor': 'black',
+             "axes.titlecolor": "black", "legend.labelcolor": "red"})
+
+        xlabels = plt.gca().get_xticklabels()
+        plt.setp(xlabels, color='black')
+
+        ylabels = plt.gca().get_yticklabels()
+        plt.setp(ylabels, color='black')
+
         plt.title(f"Distribuição de eleitos")
         plt.ylabel("Ano de Eleição")
-#        plt.xticks(range(2014, 2023, 4))
+        #plt.xticks(range(2013, 2023, 4))
         plt.xlabel("Faixa Etária dos Eleitos")
         st.pyplot(plt)
 
@@ -71,18 +84,16 @@ if seleciona_cargo == 'Governador':
         df_gov_eleito_pivot = df_gov_eleito_grouped.pivot(index='ano', columns='genero', values='count')
         df_gov_eleito_pivot['proporcao_masculino'] = df_gov_eleito_pivot['Masculino'] / (df_gov_eleito_pivot['Masculino'] + df_gov_eleito_pivot['Feminino'])
         df_gov_eleito_pivot['proporcao_mulher'] = df_gov_eleito_pivot['Feminino'] / (df_gov_eleito_pivot['Masculino'] + df_gov_eleito_pivot['Feminino'])
-
         plt.plot(df_gov_eleito_pivot['proporcao_masculino'], label='Masculino')
         plt.plot(df_gov_eleito_pivot['proporcao_mulher'], label='Feminino')
-       # plt.savefig("grafico-background-05.png", dpi=300, transparent='True')
+      #  plt.savefig("grafico-background-05.png", dpi=300, transparent='True')
         plt.xticks(range(2014, 2023, 4))
         plt.legend()
-        #plt.show()
         st.pyplot(plt)
 
     elif opcao == "Cor/Raça":
 
-            x_label = df_gov_eleito['ano'].unique()
+            x_label = sorted(list(df_gov_eleito['ano'].unique()))
             y_label = df_gov_eleito['cor_raca'].unique()
 
             heatmap_sexo_eleitos = list()
@@ -99,13 +110,12 @@ if seleciona_cargo == 'Governador':
                         linewidths=.3)
             plt.title(f"Distribuição de eleitos")
             plt.ylabel("Ano de Eleição")
-            #        plt.xticks(range(2014, 2023, 4))
             plt.xlabel("Distribuição de Cor e Raça dos eleitos")
             st.pyplot(plt)
 
     elif opcao == "Grau de Instrução":
 
-        x_label = df_gov_eleito['ano'].unique()
+        x_label = sorted(list(df_gov_eleito['ano'].unique()))
         y_label = df_gov_eleito['instrucao'].unique()
 
         heatmap_sexo_eleitos = list()
@@ -133,7 +143,7 @@ if seleciona_cargo == 'Prefeito':
     opcao = st.sidebar.radio("Selecione uma opção", ('Idade', 'Gênero', 'Cor/Raça', 'Grau de Instrução'))
 
     if opcao == 'Idade':
-        x_label = df_pref_eleito['ano'].unique()
+        x_label = sorted(list(df_pref_eleito['ano'].unique()))
         y_label = df_pref_eleito['faixa_etaria'].unique()
 
         heatmap_sexo_eleitos = list()
@@ -149,7 +159,6 @@ if seleciona_cargo == 'Prefeito':
         sns.heatmap(heatmap_sexo_eleitos, annot=True, yticklabels=y_label, xticklabels=x_label, fmt=',d', linewidths=.3)
         plt.title(f"Distribuição de eleitos")
         plt.ylabel("Ano de Eleição")
-        #        plt.xticks(range(2014, 2023, 4))
         plt.xlabel("Faixa Etária dos Eleitos")
         st.pyplot(plt)
 
@@ -174,7 +183,7 @@ if seleciona_cargo == 'Prefeito':
 
     elif opcao == "Cor/Raça":
 
-        x_label = df_pref_eleito['ano'].unique()
+        x_label = sorted(list(df_pref_eleito['ano'].unique()))
         y_label = df_pref_eleito['cor_raca'].unique()
 
         heatmap_sexo_eleitos = list()
@@ -197,7 +206,7 @@ if seleciona_cargo == 'Prefeito':
 
     elif opcao == "Grau de Instrução":
 
-        x_label = df_pref_eleito['ano'].unique()
+        x_label = sorted(list(df_pref_eleito['ano'].unique()))
         y_label = df_pref_eleito['instrucao'].unique()
 
         heatmap_sexo_eleitos = list()
@@ -236,7 +245,7 @@ if seleciona_cargo == 'Análise de Tendências':
     select_cargo = st.sidebar.selectbox("Selecione o cargo", ("Presidente" ,"Prefeito ","Governador ","Vice-prefeito","Vice-governador ","Vice-presidente ",))
     select_raca = st.sidebar.selectbox("Selecione Cor/Raça", ("Amarela", "Branca", "Indígena", "Parda", "Preta"))
     select_estado_civil = st.sidebar.selectbox("Selecione o Estado Civil", ("Casado(a)" ,"Divorciado(a) ","Não divulgável","Separado(a) judicialmente ","Solteiro(a) ","Viúvo(a)"))
-    select_faixa_etaria = st.sidebar.selectbox("Selecione a faixa etária", ("20 anos","21 a 24 anos","25 a 29 anos","30 a 34 anos","35 a 39 anos","40 a 44 anos","45 a 49 anos","50 a 54 anos","55 a 59 anos","60 a 64 anos ","65 a 69 anos","70 a 74 anos","75 a 79 anos ","80 a 84 anos","85 a 89 anos","90 a 94 anos","95 a 99 anos","Não divulgável","100 anos ou mais"))
+    select_faixa_etaria = st.sidebar.selectbox("Selecione a faixa etária", ("20 anos","21 a 24 anos","25 a 29 anos","30 a 34 anos","35 a 39 anos","40 a 44 anos","45 a 49 anos","50 a 54 anos","55 a 59 anos","60 a 64 anos ","65 a 69 anos","70 a 74 anos","75 a 79 anos","80 a 84 anos","85 a 89 anos","90 a 94 anos","95 a 99 anos","Não divulgável","100 anos ou mais"))
     select_genero = st.sidebar.selectbox("Selecione o gênero", ("Masculino", "Feminino"))
     select_instrucao = st.sidebar.selectbox("Selecione o grau de instrução", ("Analfabeto", "Lê e escreve", "Ensino Fundamental incompleto", "Ensino Fundamental completo","Ensino Médio incompleto", "Ensino Médio completo", "Superior incompleto", "Superior completo"))
     select_uf = st.sidebar.selectbox("Selecione a UF", ("AC" ,"AL","AM","AP","BA","CE","DF","ES","GO","MA","MG","MS","MT ","PA","PB","PE","PI ","PR","RJ","RN","RO","RR","RS ","SC","SE","SP","TO",))
@@ -274,9 +283,12 @@ if seleciona_cargo == 'Análise de Tendências':
 
         pessoa = pd.DataFrame(zero_df, index=[0])
         probabilidade = model.predict_proba(pessoa)[:, 1]
-        chance = str(round(chance[0],1)).replace(".,,")+'%'
+        chance = probabilidade*100
+        chance = str(round(chance[0],1)).replace('.',',')+'%'
 
-        st.write(f"A probabilidade de que o perfil selecionado seja eleito é de {chance} %")
-        print(f"A probabilidade de que o perfil selecionado seja eleito é de {probabilidade}")
+
+        st.write(f"A probabilidade de que o perfil selecionado seja eleito é de")
+        st.markdown(f'<h1 style="color:#FFBF00;font-size:64px;text-align: center;">{chance}</h1>',
+                    unsafe_allow_html=True)
 
 # st.line_chart(df_eleit.loc[:,['genero']])
