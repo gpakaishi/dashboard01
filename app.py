@@ -274,7 +274,7 @@ if seleciona_cargo == 'Análise de Tendências':
 
         pessoa = pd.DataFrame(zero_df, index=[0])
         probabilidade = model.predict_proba(pessoa)[:, 1]
-        chance = probabilidade*100
+        chance = str(round(chance[0],1)).replace(".,,")+'%'
 
         st.write(f"A probabilidade de que o perfil selecionado seja eleito é de {chance} %")
         print(f"A probabilidade de que o perfil selecionado seja eleito é de {probabilidade}")
