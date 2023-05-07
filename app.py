@@ -59,8 +59,6 @@ if seleciona_cargo == 'Governador':
 
 
         sns.heatmap(heatmap_sexo_eleitos, cmap='Spectral', annot=True, yticklabels=y_label, xticklabels=x_label )
-        #fmt = ',d'
-      #  custom_palette = sns.color_palette("RdGy", 11)
         sns.set(rc={ 'figure.facecolor': (0,0,0,0), 'axes.labelcolor': 'black',
              "axes.titlecolor": "black", "legend.labelcolor": "red"})
 
