@@ -334,8 +334,6 @@ if seleciona_base == 'Análise de Tendências':
 
         zero_df = zero_df.drop('Situação de totalização', axis=1)
 
-        # zero_df = zero_df.loc[(zero_df[0:0, 'ano_' + select_ano] = 1) & (zero_df[0:0,'raca_' + select_raca] = 1) & (zero_df[0:0,'genero_' + select_genero] = 1) & ( zero_df[0:0,'instrucao_' + select_instrucao] = 1)  & (zero_df[0:0,'cargo_' + select_cargo] = 1) & (zero_df[0:0,'estado_civil_' + select_estado_civil] = 1) & (0:0,zero_df['faixa_etaria_' + select_faixa_etaria] =1)  & (zero_df[0:0,'UF_' + select_uf] =1) & (zero_df[0:0,'det_sit_cand_deferido'] =1)]
-
         zero_df['ano_' + select_ano] = 1
         zero_df['cor_raca_' + select_raca] = 1
         zero_df['genero_' + select_genero] = 1
@@ -347,7 +345,6 @@ if seleciona_base == 'Análise de Tendências':
         zero_df['det_sit_cand_Deferido'] = 1
 
         # Divide os dados em conjunto de treino e teste
-        # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
         pessoa = pd.DataFrame(zero_df, index=[0])
         probabilidade = model.predict_proba(pessoa)[:, 1]
@@ -367,5 +364,4 @@ if seleciona_base == 'Análise de Tendências':
 
         st.write('Estes cálculos foram realizados a partir do modelo de machine learning "Random Forest" e por isso, podem apresentar pequenas variações nos resultados apresentados, uma vez que a cada nova interação, são utlizados novos dados de treinamento e teste e, portanto, novas árvores de decisões aleatórias são geradas.')
 
-        st.write('Os cálculos não levam em consideração que, segundo a legislação vigente, a idade mínima para o cargo de governador é 30 anos, e para o cargo de presidente é de 35 anos.')
-        st.write('A idade mínima para o cargo de prefeito é de 21 anos.')
+        st.write('Os cálculos não levam em consideração que, segundo a legislação vigente, a idade mínima para o cargo de governador é 30 anos, e para o cargo de presidente é de 35 anos. A idade mínima para o cargo de prefeito é de 21 anos.')
