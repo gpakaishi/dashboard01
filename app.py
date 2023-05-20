@@ -307,8 +307,11 @@ if seleciona_base == 'Análise de Tendências':
     y = df_predicao['Situação de totalização']
 
     # Cria uma interface para que o usuário escolha as variáveis de entrada
-    select_ano = st.sidebar.selectbox("Selecione o ano", ("2014", "2016", "2018", "2020", "2022"))
     select_cargo = st.sidebar.selectbox("Selecione o cargo", (  "Presidente", "Prefeito", "Governador", "Vice-prefeito", "Vice-governador", "Vice-presidente",))
+    if select_cargo == 'Prefeito' or select_cargo ==  'Vice-prefeito':
+        select_ano = st.sidebar.selectbox("Selecione o ano", ("2016", "2020"))
+    else:
+        select_ano = st.sidebar.selectbox("Selecione o ano", ("2014", "2018", "2022"))
     select_raca = st.sidebar.selectbox("Selecione Cor/Raça", ("Amarela", "Branca", "Indígena", "Parda", "Preta"))
     select_estado_civil = st.sidebar.selectbox("Selecione o Estado Civil", ( "Casado(a)", "Divorciado(a)", "Não divulgável", "Separado(a) judicialmente", "Solteiro(a)", "Viúvo(a)"))
     select_faixa_etaria = st.sidebar.selectbox("Selecione a faixa etária", ( "20 anos", "21 a 24 anos", "25 a 29 anos", "30 a 34 anos", "35 a 39 anos", "40 a 44 anos", "45 a 49 anos","50 a 54 anos", "55 a 59 anos", "60 a 64 anos", "65 a 69 anos", "70 a 74 anos", "75 a 79 anos", "80 a 84 anos","85 a 89 anos", "90 a 94 anos", "95 a 99 anos", "Não divulgável", "100 anos ou mais"))
@@ -356,9 +359,13 @@ if seleciona_base == 'Análise de Tendências':
 
         y_pred = model.predict(X)
         accuracy = accuracy_score(y, y_pred)
-        acuracia = accuracy * 100
-        acuracia= str(round(acuracia[0], 1)).replace('.', ',') + '%'
+        acuracia = "{:.2%}".format(accuracy)
         st.write('A acurácia do modelo é:')
         st.markdown(f'<h1 style="color:#FFBF00;font-size:64px;text-align: center;">{acuracia}</h1>', unsafe_allow_html=True)
 
 
+
+        st.write('Estes cálculos foram realizados a partir do modelo de machine learning "Random Forest" e por isso, podem apresentar pequenas variações nos resultados apresentados, uma vez que a cada nova interação, são utlizados novos dados de treinamento e teste e, portanto, novas árvores de decisões aleatórias são geradas.')
+
+        st.write('Os cálculos não levam em consideração que, segundo a legislação vigente, a idade mínima para o cargo de governador é 30 anos, e para o cargo de presidente é de 35 anos.')
+        st.write('A idade mínima para o cargo de prefeito é de 21 anos.')
