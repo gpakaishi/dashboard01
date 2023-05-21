@@ -27,7 +27,7 @@ df_predicao.rename(columns={"Ano de eleição":"ano", "Cargo":"cargo", "Cor/raç
 df_predicao = df_predicao.dropna()
 df_predicao.drop("ocupacao",axis = 1, inplace=True)
 
-def mapacalor(parametro, df):
+def mapacalor(parametro, df, titulo):
     x_label = sorted(list(df['Ano de eleição'].unique()))
     y_label = sorted(list(df[parametro].unique()))
 
@@ -51,14 +51,14 @@ def mapacalor(parametro, df):
     ylabels = plt.gca().get_yticklabels()
     plt.setp(ylabels, color='white')
 
-    plt.title("Distribuição de eleitos")
+    plt.title(titulo)
     plt.ylabel(parametro)
     plt.xlabel("Ano de Eleição")
 
     st.pyplot(plt)
     plt.show()
 
-def mapacalor_porcentagem(parametro, df):
+def mapacalor_porcentagem(parametro, df, titulo):
     x_label = sorted(list(df['Ano de eleição'].unique()))
     y_label = sorted(list(df[parametro].unique()))
 
@@ -88,7 +88,7 @@ def mapacalor_porcentagem(parametro, df):
     ylabels = plt.gca().get_yticklabels()
     plt.setp(ylabels, color='white')
 
-    plt.title("Distribuição de eleitos")
+    plt.title(titulo)
     plt.ylabel(parametro)
     plt.xlabel("Ano de Eleição")
 
@@ -104,16 +104,16 @@ if seleciona_base == 'Candidatos':
     seleciona_cargo = st.sidebar.radio("Selecione o cargo", ('Governador', 'Prefeito'))
     if seleciona_cargo == 'Governador':
 
-        opcao = st.sidebar.radio("Selecione uma opção", ('Idade', 'Gênero','Cor/Raça', 'Grau de Instrução'))
+        opcao = st.sidebar.radio("Selecione uma opção", ('Cor/Raça', 'Gênero','Idade', 'Estado Civil', 'Grau de Instrução'))
 
         if opcao == 'Idade':
 
             seletc_tipo_grafico = st.selectbox('Selecione o tipo de exibição do gráfico', ('Dados absolutos', 'Dados em porcentagem'))
 
             if seletc_tipo_grafico == 'Dados absolutos':
-                mapacalor('Faixa etária', df_gov_cand)
+                mapacalor('Faixa etária', df_gov_cand, 'Distribuição dos Candidatos')
             if seletc_tipo_grafico == 'Dados em porcentagem':
-                mapacalor_porcentagem('Faixa etária', df_gov_cand)
+                mapacalor_porcentagem('Faixa etária', df_gov_cand, 'Distribuição dos Candidatos' )
             st.write('Os valores mencionados no gráfico representam a soma de candidatos para os cargos de Governador e Vice Governador.')
 
         elif opcao == "Cor/Raça":
@@ -121,9 +121,9 @@ if seleciona_base == 'Candidatos':
             seletc_tipo_grafico = st.selectbox('Selecione o tipo de exibição do gráfico',  ('Dados absolutos', 'Dados em porcentagem'))
 
             if seletc_tipo_grafico == 'Dados absolutos':
-                mapacalor('Cor/raça', df_gov_cand)
+                mapacalor('Cor/raça', df_gov_cand, 'Distribuição dos Candidatos')
             if seletc_tipo_grafico == 'Dados em porcentagem':
-                mapacalor_porcentagem('Cor/raça', df_gov_cand)
+                mapacalor_porcentagem('Cor/raça', df_gov_cand, 'Distribuição dos Candidatos')
             st.write('Os valores mencionados no gráfico representam a soma de candidatos para os cargos de Governador e Vice Governador.')
 
         elif opcao == "Grau de Instrução":
@@ -131,9 +131,9 @@ if seleciona_base == 'Candidatos':
             seletc_tipo_grafico = st.selectbox('Selecione o tipo de exibição do gráfico',  ('Dados absolutos', 'Dados em porcentagem'))
 
             if seletc_tipo_grafico == 'Dados absolutos':
-                mapacalor('Grau de instrução', df_gov_cand)
+                mapacalor('Grau de instrução', df_gov_cand, 'Distribuição dos Candidatos')
             if seletc_tipo_grafico == 'Dados em porcentagem':
-                mapacalor_porcentagem('Grau de instrução', df_gov_cand)
+                mapacalor_porcentagem('Grau de instrução', df_gov_cand, 'Distribuição dos Candidatos')
             st.write('Os valores mencionados no gráfico representam a soma de candidatos para os cargos de Governador e Vice Governador.')
 
         elif opcao == "Gênero":
@@ -141,23 +141,34 @@ if seleciona_base == 'Candidatos':
             seletc_tipo_grafico = st.selectbox('Selecione o tipo de exibição do gráfico', ('Dados absolutos', 'Dados em porcentagem'))
 
             if seletc_tipo_grafico == 'Dados absolutos':
-               mapacalor('Gênero', df_gov_cand)
+               mapacalor('Gênero', df_gov_cand, 'Distribuição dos Candidatos')
             if seletc_tipo_grafico ==  'Dados em porcentagem':
-                mapacalor_porcentagem('Gênero', df_gov_cand)
+                mapacalor_porcentagem('Gênero', df_gov_cand, 'Distribuição dos Candidatos')
             st.write('Os valores mencionados no gráfico representam a soma de candidatos para os cargos de Governador e Vice Governador.')
+
+        elif opcao == 'Estado Civil':
+
+            seletc_tipo_grafico = st.selectbox('Selecione o tipo de exibição do gráfico',  ('Dados absolutos', 'Dados em porcentagem'))
+
+            if seletc_tipo_grafico == 'Dados absolutos':
+                mapacalor('Estado civil', df_gov_cand, 'Distribuição dos Candidatos')
+            if seletc_tipo_grafico ==  'Dados em porcentagem':
+                mapacalor_porcentagem('Estado civil', df_gov_cand, 'Distribuição dos Candidatos')
+            st.write('Os valores mencionados no gráfico representam a soma de candidatos para os cargos de Governador e Vice Governador.')
+
 
     if seleciona_cargo == 'Prefeito':
 
-        opcao = st.sidebar.radio("Selecione uma opção", ('Idade', 'Gênero','Cor/Raça', 'Grau de Instrução'))
+        opcao = st.sidebar.radio("Selecione uma opção", ('Cor/Raça', 'Gênero','Idade', 'Estado Civil', 'Grau de Instrução'))
 
         if opcao == 'Idade':
 
             seletc_tipo_grafico = st.selectbox('Selecione o tipo de exibição do gráfico', ('Dados absolutos', 'Dados em porcentagem'))
 
             if seletc_tipo_grafico == 'Dados absolutos':
-                mapacalor('Faixa etária', df_pref_cand)
+                mapacalor('Faixa etária', df_pref_cand, 'Distribuição dos Candidatos')
             if seletc_tipo_grafico == 'Dados em porcentagem':
-                mapacalor_porcentagem('Faixa etária', df_pref_cand)
+                mapacalor_porcentagem('Faixa etária', df_pref_cand, 'Distribuição dos Candidatos')
 
             st.write('Os valores mencionados no gráfico representam a soma de candidatos para os cargos de Prefeito e Vice Prefeito.')
             st.write('Foi encontrada uma inconsistência nos dados do TSE. O ano de nascimento do Prefeito eleito em Arambaré - RS em 2016, no registro de candidatura, consta como 1049')
@@ -168,9 +179,9 @@ if seleciona_base == 'Candidatos':
             seletc_tipo_grafico = st.selectbox('Selecione o tipo de exibição do gráfico',('Dados absolutos', 'Dados em porcentagem'))
 
             if seletc_tipo_grafico == 'Dados absolutos':
-                mapacalor('Cor/raça', df_pref_cand)
+                mapacalor('Cor/raça', df_pref_cand, 'Distribuição dos Candidatos')
             if seletc_tipo_grafico == 'Dados em porcentagem':
-                mapacalor_porcentagem('Cor/raça', df_pref_cand)
+                mapacalor_porcentagem('Cor/raça', df_pref_cand, 'Distribuição dos Candidatos')
 
             st.write('Os valores mencionados no gráfico representam a soma de candidatos para os cargos de Prefeito e Vice Prefeito.')
 
@@ -179,9 +190,9 @@ if seleciona_base == 'Candidatos':
             seletc_tipo_grafico = st.selectbox('Selecione o tipo de exibição do gráfico',  ('Dados absolutos', 'Dados em porcentagem'))
 
             if seletc_tipo_grafico == 'Dados absolutos':
-                mapacalor('Grau de instrução', df_pref_cand)
+                mapacalor('Grau de instrução', df_pref_cand, 'Distribuição dos Candidatos')
             if seletc_tipo_grafico == 'Dados em porcentagem':
-                mapacalor_porcentagem('Grau de instrução', df_pref_cand)
+                mapacalor_porcentagem('Grau de instrução', df_pref_cand, 'Distribuição dos Candidatos')
             st.write('Os valores mencionados no gráfico representam a soma de candidatos para os cargos de Prefeito e Vice Prefeito.')
 
         elif opcao == "Gênero":
@@ -189,11 +200,21 @@ if seleciona_base == 'Candidatos':
             seletc_tipo_grafico = st.selectbox('Selecione o tipo de exibição do gráfico',('Dados absolutos', 'Dados em porcentagem'))
 
             if seletc_tipo_grafico == 'Dados absolutos':
-                mapacalor('Gênero', df_pref_cand)
+                mapacalor('Gênero', df_pref_cand, 'Distribuição dos Candidatos')
             if seletc_tipo_grafico == 'Dados em porcentagem':
-                mapacalor_porcentagem('Gênero', df_pref_cand)
+                mapacalor_porcentagem('Gênero', df_pref_cand, 'Distribuição dos Candidatos')
 
-            st.write('Os valores mencionados no gráfico representam a soma de candidatos para os cargos de Governador e Vice Governador.')
+            st.write('Os valores mencionados no gráfico representam a soma de candidatos para os cargos de Prefeito e Vice Prefeito.')
+
+        elif opcao == 'Estado Civil':
+
+            seletc_tipo_grafico = st.selectbox('Selecione o tipo de exibição do gráfico',  ('Dados absolutos', 'Dados em porcentagem'))
+
+            if seletc_tipo_grafico == 'Dados absolutos':
+                mapacalor('Estado civil', df_pref_cand, 'Distribuição dos Candidatos')
+            if seletc_tipo_grafico ==  'Dados em porcentagem':
+                mapacalor_porcentagem('Estado civil', df_pref_cand, 'Distribuição dos Candidatos')
+            st.write('Os valores mencionados no gráfico representam a soma de candidatos para os cargos de Prefeito e Vice Prefeito.')
 
     st.write('Fonte: www.tse.gov.br')
 
@@ -203,16 +224,16 @@ if seleciona_base == 'Eleitos':
 
     if seleciona_cargo == 'Governador':
 
-        opcao = st.sidebar.radio("Selecione uma opção", ('Idade', 'Gênero','Cor/Raça', 'Grau de Instrução'))
+        opcao = st.sidebar.radio("Selecione uma opção", ('Cor/Raça', 'Gênero','Idade', 'Estado Civil', 'Grau de Instrução'))
 
         if opcao == 'Idade':
 
             seletc_tipo_grafico = st.selectbox('Selecione o tipo de exibição do gráfico', ('Dados absolutos', 'Dados em porcentagem'))
 
             if seletc_tipo_grafico == 'Dados absolutos':
-                mapacalor('Faixa etária', df_gov_eleito)
+                mapacalor('Faixa etária', df_gov_eleito, 'Distribuição dos Eleitos')
             if seletc_tipo_grafico == 'Dados em porcentagem':
-                mapacalor_porcentagem('Faixa etária', df_gov_eleito)
+                mapacalor_porcentagem('Faixa etária', df_gov_eleito, 'Distribuição dos Eleitos')
             st.write('Os valores mencionados no gráfico representam a soma de eleitos para os cargos de Governador e Vice Governador.')
 
         elif opcao == 'Gênero':
@@ -220,9 +241,9 @@ if seleciona_base == 'Eleitos':
             seletc_tipo_grafico = st.selectbox('Selecione o tipo de exibição do gráfico', ('Dados absolutos', 'Dados em porcentagem'))
 
             if seletc_tipo_grafico == 'Dados absolutos':
-                mapacalor('Gênero', df_gov_eleito)
+                mapacalor('Gênero', df_gov_eleito, 'Distribuição dos Eleitos')
             if seletc_tipo_grafico == 'Dados em porcentagem':
-                mapacalor_porcentagem('Gênero', df_gov_eleito)
+                mapacalor_porcentagem('Gênero', df_gov_eleito, 'Distribuição dos Eleitos')
             st.write('Os valores mencionados no gráfico representam a soma de eleitos para os cargos de Governador e Vice Governador.')
 
         elif opcao == "Cor/Raça":
@@ -230,9 +251,9 @@ if seleciona_base == 'Eleitos':
             seletc_tipo_grafico = st.selectbox('Selecione o tipo de exibição do gráfico',('Dados absolutos', 'Dados em porcentagem'))
 
             if seletc_tipo_grafico == 'Dados absolutos':
-                mapacalor('Cor/raça', df_gov_eleito)
+                mapacalor('Cor/raça', df_gov_eleito, 'Distribuição dos Eleitos')
             if seletc_tipo_grafico == 'Dados em porcentagem':
-                mapacalor_porcentagem('Cor/raça', df_gov_eleito)
+                mapacalor_porcentagem('Cor/raça', df_gov_eleito, 'Distribuição dos Eleitos')
             st.write('Os valores mencionados no gráfico representam a soma de eleitos para os cargos de Governador e Vice Governador.')
 
 
@@ -241,23 +262,33 @@ if seleciona_base == 'Eleitos':
             seletc_tipo_grafico = st.selectbox('Selecione o tipo de exibição do gráfico', ('Dados absolutos', 'Dados em porcentagem'))
 
             if seletc_tipo_grafico == 'Dados absolutos':
-                mapacalor('Grau de instrução', df_gov_eleito)
+                mapacalor('Grau de instrução', df_gov_eleito, 'Distribuição dos Eleitos')
             if seletc_tipo_grafico == 'Dados em porcentagem':
-                mapacalor_porcentagem('Grau de instrução', df_gov_eleito)
+                mapacalor_porcentagem('Grau de instrução', df_gov_eleito, 'Distribuição dos Eleitos')
             st.write( 'Os valores mencionados no gráfico representam a soma de eleitos para os cargos de Governador e Vice Governador.')
+
+        elif opcao == 'Estado Civil':
+
+            seletc_tipo_grafico = st.selectbox('Selecione o tipo de exibição do gráfico',  ('Dados absolutos', 'Dados em porcentagem'))
+
+            if seletc_tipo_grafico == 'Dados absolutos':
+                mapacalor('Estado civil', df_gov_eleito, 'Distribuição dos Eleitos')
+            if seletc_tipo_grafico ==  'Dados em porcentagem':
+                mapacalor_porcentagem('Estado civil', df_gov_eleito, 'Distribuição dos Eleitos')
+            st.write('Os valores mencionados no gráfico representam a soma de candidatos para os cargos de Governador e Vice Governador.')
 
     if seleciona_cargo == 'Prefeito':
 
-        opcao = st.sidebar.radio("Selecione uma opção", ('Idade', 'Gênero', 'Cor/Raça', 'Grau de Instrução'))
+        opcao = st.sidebar.radio("Selecione uma opção", ('Cor/Raça', 'Gênero','Idade', 'Estado Civil', 'Grau de Instrução'))
 
         if opcao == 'Idade':
             seletc_tipo_grafico = st.selectbox('Selecione o tipo de exibição do gráfico', ('Dados absolutos', 'Dados em porcentagem'))
 
             if seletc_tipo_grafico == 'Dados absolutos':
-                mapacalor('Faixa etária', df_pref_eleito)
+                mapacalor('Faixa etária', df_pref_eleito, 'Distribuição dos Eleitos')
             if seletc_tipo_grafico == 'Dados em porcentagem':
-                mapacalor_porcentagem('Faixa etária', df_pref_eleito)
-            st.write('Os valores mencionados no gráfico representam a soma de eleitos para os cargos de Governador e Vice Governador.')
+                mapacalor_porcentagem('Faixa etária', df_pref_eleito, 'Distribuição dos Eleitos')
+            st.write('Os valores mencionados no gráfico representam a soma de eleitos para os cargos de Prefeito e Vice Prefeito.')
             st.write('Foi encontrada uma inconsistência nos dados do TSE. O ano de nascimento do Prefeito eleito em Arambaré - RS em 2016, no registro de candidatura, consta como 1049')
             st.write('https://divulgacandcontas.tse.jus.br/divulga/#/candidato/2016/2/86320/210000006573')
 
@@ -265,10 +296,10 @@ if seleciona_base == 'Eleitos':
             seletc_tipo_grafico = st.selectbox('Selecione o tipo de exibição do gráfico', ('Dados absolutos', 'Dados em porcentagem'))
 
             if seletc_tipo_grafico == 'Dados absolutos':
-                mapacalor('Gênero', df_pref_eleito)
+                mapacalor('Gênero', df_pref_eleito, 'Distribuição dos Eleitos')
             if seletc_tipo_grafico == 'Dados em porcentagem':
-                mapacalor_porcentagem('Gênero', df_pref_eleito)
-            st.write('Os valores mencionados no gráfico representam a soma de eleitos para os cargos de Governador e Vice Governador.')
+                mapacalor_porcentagem('Gênero', df_pref_eleito, 'Distribuição dos Eleitos')
+            st.write('Os valores mencionados no gráfico representam a soma de eleitos para os cargos de Prefeito e Vice Prefeito.')
 
 
         elif opcao == "Cor/Raça":
@@ -276,20 +307,30 @@ if seleciona_base == 'Eleitos':
             seletc_tipo_grafico = st.selectbox('Selecione o tipo de exibição do gráfico',('Dados absolutos', 'Dados em porcentagem'))
 
             if seletc_tipo_grafico == 'Dados absolutos':
-                mapacalor('Cor/raça', df_pref_eleito)
+                mapacalor('Cor/raça', df_pref_eleito, 'Distribuição dos Eleitos')
             if seletc_tipo_grafico == 'Dados em porcentagem':
-                mapacalor_porcentagem('Cor/raça', df_pref_eleito)
-            st.write('Os valores mencionados no gráfico representam a soma de eleitos para os cargos de Governador e Vice Governador.')
+                mapacalor_porcentagem('Cor/raça', df_pref_eleito, 'Distribuição dos Eleitos')
+            st.write('Os valores mencionados no gráfico representam a soma de eleitos para os cargos de Prefeito e Vice Prefeito.')
 
         elif opcao == "Grau de Instrução":
 
             seletc_tipo_grafico = st.selectbox('Selecione o tipo de exibição do gráfico', ('Dados absolutos', 'Dados em porcentagem'))
 
             if seletc_tipo_grafico == 'Dados absolutos':
-                mapacalor('Grau de instrução', df_pref_eleito)
+                mapacalor('Grau de instrução', df_pref_eleito, 'Distribuição dos Eleitos')
             if seletc_tipo_grafico == 'Dados em porcentagem':
-                mapacalor_porcentagem('Grau de instrução', df_pref_eleito)
-            st.write( 'Os valores mencionados no gráfico representam a soma de eleitos para os cargos de Governador e Vice Governador.')
+                mapacalor_porcentagem('Grau de instrução', df_pref_eleito, 'Distribuição dos Eleitos')
+            st.write( 'Os valores mencionados no gráfico representam a soma de eleitos para os cargos de Prefeito e Vice Prefeito.')
+
+        elif opcao == 'Estado Civil':
+
+            seletc_tipo_grafico = st.selectbox('Selecione o tipo de exibição do gráfico',  ('Dados absolutos', 'Dados em porcentagem'))
+
+            if seletc_tipo_grafico == 'Dados absolutos':
+                mapacalor('Estado civil', df_pref_eleito, 'Distribuição dos Eleitos')
+            if seletc_tipo_grafico ==  'Dados em porcentagem':
+                mapacalor_porcentagem('Estado civil', df_pref_eleito, 'Distribuição dos Eleitos')
+            st.write('Os valores mencionados no gráfico representam a soma de candidatos para os cargos de Prefeito e Vice Prefeito.')
 
     st.write('Fonte: www.tse.gov.br')
 
