@@ -275,7 +275,7 @@ if seleciona_base == 'Eleitos':
                 mapacalor('Estado civil', df_gov_eleito, 'Distribuição dos Eleitos')
             if seletc_tipo_grafico ==  'Dados em porcentagem':
                 mapacalor_porcentagem('Estado civil', df_gov_eleito, 'Distribuição dos Eleitos')
-            st.write('Os valores mencionados no gráfico representam a soma de candidatos para os cargos de Governador e Vice Governador.')
+            st.write('Os valores mencionados no gráfico representam a soma de eleitos para os cargos de Governador e Vice Governador.')
 
     if seleciona_cargo == 'Prefeito':
 
